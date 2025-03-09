@@ -1,3 +1,4 @@
+
 # Customer API - RESTful Backend Service
 
 A comprehensive RESTful API service for customer and address management, featuring full CRUD operations, data validation, and extensive test coverage.
@@ -13,68 +14,13 @@ A comprehensive RESTful API service for customer and address management, featuri
 
 ## Tech Stack
 
+- **Python 3.11**: Core programming language
 - **Flask**: Lightweight web framework for API development
-- **MySQL**: Relational database for data storage
+- **MySQL 8**: Relational database for data storage
 - **Docker**: Containerization for consistent development and deployment
 - **Docker Compose**: Multi-container Docker applications
 - **Pytest**: Testing framework for automated tests
-
-## API Endpoints
-
-### Customer Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/customers` | List all customers |
-| POST | `/api/customers` | Create a new customer |
-| GET | `/api/customers/{id}` | Get customer details by ID |
-| PUT | `/api/customers/{id}` | Update customer details |
-| DELETE | `/api/customers/{id}` | Delete a customer |
-
-### Address Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/customers/{customer_id}/addresses` | List customer's addresses |
-| POST | `/api/addresses` | Add a new address |
-| GET | `/api/addresses/{id}` | Get address details by ID |
-| PUT | `/api/addresses/{id}` | Update address details |
-| DELETE | `/api/addresses/{id}` | Delete an address |
-
-## Data Models
-
-### Customer
-
-```json
-{
-  "id": 1,
-  "title": "Mr",
-  "name": "Agung Ferdiansyah",
-  "gender": "M",
-  "phone_number": "08123456789",
-  "image": "profile.jpg",
-  "email": "agung@example.com",
-  "created_at": "2025-03-09 12:00:00",
-  "updated_at": "2025-03-09 12:00:00",
-  "addresses": []
-}
-```
-
-### Address
-
-```json
-{
-  "id": 1,
-  "customer_id": 1,
-  "address": "condong street",
-  "district": "gading",
-  "city": "probolinggo",
-  "province": "jawa timur",
-  "postal_code": "12345",
-  "created_at": "2025-03-09 12:00:00",
-  "updated_at": "2025-03-09 12:00:00"
-}
-```
+- **Git**: Version control system
 
 ## Setup and Installation
 
@@ -87,32 +33,24 @@ A comprehensive RESTful API service for customer and address management, featuri
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/customer_api.git
-   cd customer_api
+   git clone https://github.com/agungferdi/Customers-API-Technical-Test-.git
+   cd Customers-API-Technical-Test-
    ```
 
-2. Start the Docker containers:
+2. Start the Docker containers and run tests (all in one command):
    ```bash
-   docker-compose up -d
+   docker-compose up -d && \
+   echo "Waiting for database to initialize..." && \
+   echo "Copying files to container..." && \
+   docker cp routes/customer_routes.py customer_api-web-1:/app/routes/ && \
+   docker cp routes/address_routes.py customer_api-web-1:/app/routes/ && \
+   docker cp tests/test_customers.py customer_api-web-1:/app/tests/ && \
+   docker cp tests/test_addresses.py customer_api-web-1:/app/tests/ 2>/dev/null || echo "No test_addresses.py found" && \
+   echo "Running tests..." && \
+   docker exec -it customer_api-web-1 bash -c "cd /app && python -m pytest -v"
    ```
-
-3. The API will be available at `http://localhost:5000/api`
-
-### Running Tests
-
-```bash
-# Run all tests
-docker exec -it customer_api-web-1 bash -c "cd /app && python -m pytest -v"
-
-# Run customer tests only
-docker exec -it customer_api-web-1 bash -c "cd /app && python -m pytest tests/test_customers.py -v"
-
-# Run address tests only
-docker exec -it customer_api-web-1 bash -c "cd /app && python -m pytest tests/test_addresses.py -v"
-```
-
-After running tests, sample data will be available in the database that you can interact with via the API.
-
+   It Should be like this:
+   ![Test Results Screenshot](images/test_results.png)
 ## Project Structure
 
 ```
@@ -126,7 +64,7 @@ customer_api/
 ├── routes/                 # API route handlers
 │   ├── customer_routes.py
 │   └── address_routes.py
-├── tests/                  # Test suites
+├── tests/                  # Testing
 │   ├── test_customers.py
 │   └── test_addresses.py
 ├── utils/                  # Utility functions
@@ -135,236 +73,55 @@ customer_api/
     └── init_db.sql
 ```
 
-## API Usage Examples with Postman
+## API Endpoints
 
-### 1. Create a New Customer
+### Customer Endpoints
 
-![Create Customer](https://example.com/images/create_customer.png)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/customers` | List all customers |
+| POST | `/api/customers` | Create a new customer |
+| GET | `/api/customers/{id}` | Get customer details by ID and its adrress |
+| PUT | `/api/customers/{id}` | Update customer details |
+| DELETE | `/api/customers/{id}` | Delete a customer |
 
-**Request:**
-- Method: `POST`
-- URL: `http://localhost:5000/api/customers`
-- Headers: `Content-Type: application/json`
-- Body:
-```json
-{
-  "name": "Agung Ferdiansyah",
-  "email": "agung@example.com",
-  "phone_number": "08123456789",
-  "title": "Mr",
-  "gender": "M",
-  "image": "http://example.com/profile.jpg"
-}
-```
+### Address Endpoints
 
-**Response:**
-```json
-{
-  "id": 1,
-  "title": "Mr",
-  "name": "Agung Ferdiansyah",
-  "gender": "M",
-  "phone_number": "08123456789",
-  "image": "http://example.com/profile.jpg",
-  "email": "agung@example.com",
-  "created_at": "2025-03-09 12:30:45",
-  "updated_at": "2025-03-09 12:30:45"
-}
-```
-
-### 2. List All Customers
-
-![List Customers](https://example.com/images/list_customers.png)
-
-**Request:**
-- Method: `GET`
-- URL: `http://localhost:5000/api/customers`
-
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "title": "Mr",
-    "name": "Agung Ferdiansyah",
-    "gender": "M",
-    "phone_number": "08123456789",
-    "image": "http://example.com/profile.jpg",
-    "email": "agung@example.com",
-    "created_at": "2025-03-09 12:30:45",
-    "updated_at": "2025-03-09 12:30:45"
-  },
-  {
-    "id": 2,
-    "title": "Mrs",
-    "name": "Jane Smith",
-    "gender": "F",
-    "phone_number": "08987654321",
-    "image": null,
-    "email": "jane@example.com",
-    "created_at": "2025-03-09 12:40:22",
-    "updated_at": "2025-03-09 12:40:22"
-  }
-]
-```
-
-### 3. Add an Address to a Customer
-
-![Add Address](https://example.com/images/add_address.png)
-
-**Request:**
-- Method: `POST`
-- URL: `http://localhost:5000/api/addresses`
-- Headers: `Content-Type: application/json`
-- Body:
-```json
-{
-  "customer_id": 1,
-  "address": "condong street",
-  "district": "gading",
-  "city": "probolinggo",
-  "province": "jawa timur",
-  "postal_code": "12345"
-}
-```
-
-**Response:**
-```json
-{
-  "id": 1,
-  "customer_id": 1,
-  "address": "condong street",
-  "district": "gading",
-  "city": "probolinggo",
-  "province": "jawa timur",
-  "postal_code": "12345",
-  "created_at": "2025-03-09 12:35:22",
-  "updated_at": "2025-03-09 12:35:22"
-}
-```
-
-### 4. Get Customer with Addresses
-
-![Get Customer with Addresses](https://example.com/images/get_customer_with_addresses.png)
-
-**Request:**
-- Method: `GET`
-- URL: `http://localhost:5000/api/customers/1`
-
-**Response:**
-```json
-{
-  "id": 1,
-  "title": "Mr",
-  "name": "Agung Ferdiansyah",
-  "gender": "M",
-  "phone_number": "08123456789",
-  "image": "http://example.com/profile.jpg",
-  "email": "agung@example.com",
-  "created_at": "2025-03-09 12:30:45",
-  "updated_at": "2025-03-09 12:30:45",
-  "addresses": [
-    {
-      "id": 1,
-      "customer_id": 1,
-      "address": "condong street",
-      "district": "gading",
-      "city": "probolinggo",
-      "province": "jawa timur",
-      "postal_code": "12345",
-      "created_at": "2025-03-09 12:35:22",
-      "updated_at": "2025-03-09 12:35:22"
-    }
-  ]
-}
-```
-
-### 5. Update a Customer
-
-![Update Customer](https://example.com/images/update_customer.png)
-
-**Request:**
-- Method: `PUT`
-- URL: `http://localhost:5000/api/customers/1`
-- Headers: `Content-Type: application/json`
-- Body:
-```json
-{
-  "name": "Agung F. Muhammad",
-  "image": "http://example.com/new_profile.jpg"
-}
-```
-
-**Response:**
-```json
-{
-  "id": 1,
-  "title": "Mr",
-  "name": "Agung F. Muhammad",
-  "gender": "M",
-  "phone_number": "08123456789",
-  "image": "http://example.com/new_profile.jpg",
-  "email": "agung@example.com",
-  "created_at": "2025-03-09 12:30:45",
-  "updated_at": "2025-03-09 12:50:15"
-}
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/customers/{customer_id}/addresses` | List customer's addresses |
+| POST | `/api/addresses` | Add a new address |
+| GET | `/api/addresses/{id}` | Get address details by ID |
+| PUT | `/api/addresses/{id}` | Update address details |
+| DELETE | `/api/addresses/{id}` | Delete an address |
 
 ## Working with Test Data
 
-After running the test suite, several customer and address records will be created in the database. Here's how to work with this data:
+After running the test suite, several customer and address records will be created in the database. You can interact with this data via the API endpoints listed above.
 
-1. **View Test Data**: Use GET requests to list all customers and their addresses
-   ```
-   GET http://localhost:5000/api/customers
-   ```
+## API Usage Examples with Postman
 
-2. **Edit Existing Test Data**: Use the IDs from the test data to update records
-   ```
-   PUT http://localhost:5000/api/customers/{id}
-   ```
+### 1. Create a New Customer
+![Test Results Screenshot](images/1.png)
 
-3. **Add More Data**: Create additional customers and addresses as needed
-   ```
-   POST http://localhost:5000/api/customers
-   POST http://localhost:5000/api/addresses
-   ```
+### 2. List All Customers
+![Test Results Screenshot](images/2.png)
 
-4. **Reset All Data**: To clear all test data and start fresh
-   ```bash
-   docker-compose down -v
-   docker-compose up -d
-   ```
+### 3. Detail of customers (with associated address)
+![Test Results Screenshot](images/3.png)
 
-## Custom Image Support
+### 4. Update a Customer
+![Test Results Screenshot](images/4.png)
+### 5. Update address
+![Test Results Screenshot](images/5.png)
+### 6. Add an Address to a Customer
+![Test Results Screenshot](images/6.png)
+### 7. Delete an Address
+![Test Results Screenshot](images/7.png)
+### 8. Delete a Customerf
+![Test Results Screenshot](images/8.png)
 
-The API supports custom images for customers via image URLs. To add or update a customer's image:
+ 
 
-1. **When creating a customer**:
-   ```json
-   {
-     "name": "Agung Ferdiansyah",
-     "email": "agung@example.com",
-     "phone_number": "08123456789",
-     "title": "Mr",
-     "gender": "M",
-     "image": "https://example.com/profile.jpg"
-   }
-   ```
+created by Agung For Technical Test - Backend Engineer
 
-2. **When updating a customer**:
-   ```json
-   {
-     "image": "https://example.com/new_profile.jpg"
-   }
-   ```
-
-The image URL will be stored in the database and returned in customer responses.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-Developed for the Technical Backend Engineering Test by Agung Ferdiansyah.
