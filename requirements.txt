@@ -1,0 +1,4 @@
+flask
+mysql-connector-python
+pytest
+gunicorn==20.1.0
