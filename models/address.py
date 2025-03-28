@@ -12,7 +12,7 @@ class Address:
         
     @staticmethod
     def from_dict(data):
-        return Address(
+        return Address( 
             id=data.get('id'),
             customer_id=data.get('customer_id'),
             address=data.get('address'),
@@ -36,3 +36,4 @@ class Address:
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
+        

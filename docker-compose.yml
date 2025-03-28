@@ -13,6 +13,10 @@ services:
       db:
         condition: service_healthy
     command: ["./wait-for-it.sh", "db:3306", "--timeout=90", "--", "gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./logs:/app/logs
 
   db:
     image: mysql:8.0
@@ -29,6 +33,7 @@ services:
       interval: 5s
       timeout: 10s
       retries: 15
+      start_period: 30s
 
 volumes:
   db_data:

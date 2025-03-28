@@ -48,7 +48,7 @@ def register_customer_routes(api_blueprint):
             
             customer_id = cursor.lastrowid
             
-            # Create customer object with the ID
+            
             customer = Customer.from_dict({
                 'id': customer_id,
                 'title': data.get('title', 'Mr'),
