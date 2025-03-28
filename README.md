@@ -1,26 +1,80 @@
+# Customer Management System - Full Stack Application
 
-# Customer API - RESTful Backend Service
+A comprehensive full-stack application for managing customers and their associated addresses. This project includes a responsive, modern frontend interface and a RESTful API backend.
 
-A comprehensive RESTful API service for customer and address management, featuring full CRUD operations, data validation, and extensive test coverage.
+---
 
-## Features
+## Frontend Features
 
-- **Customer Management**: Create, read, update, and delete customer records
-- **Address Management**: Associate multiple addresses with each customer
-- **Image Support**: Upload and retrieve customer profile images
-- **Data Validation**: Prevent duplicate emails and enforce required fields
-- **RESTful Design**: Following REST principles with appropriate HTTP verbs and status codes
-- **Comprehensive Test Suite**: Automated tests for all API endpoints
+The frontend is built with **HTML5**, **CSS3**, **Bootstrap 5**, and **JavaScript** to provide a modern, responsive, and user-friendly interface.
+
+### Key Features:
+1. **Add a New Customer**:
+   - Click the "Add Customer" button to open the form.
+   - Fill in the details and click "Save Customer."
+   - The new customer will appear in the customer list.
+
+   ![Add Customer Screenshot](images/frontend_add_customer.png)
+
+2. **View Customer Details**:
+   - Click the "View" button on a customer card to see their details and associated addresses.
+   - The modal displays customer information and a list of addresses.
+
+   ![View Customer Details Screenshot](images/frontend_customer_details.png)
+
+3. **Edit a Customer**:
+   - Click the "Edit" button on a customer card to update their details.
+   - The form will pre-fill with the customer's current information.
+
+   ![Edit Customer Screenshot](images/frontend_edit_customer.png)
+
+4. **Manage Addresses**:
+   - Add, edit, or delete addresses directly from the customer details modal.
+   - Click "Add Address" to open the address form.
+
+   ![Manage Addresses Screenshot](images/frontend_manage_addresses.png)
+
+5. **Delete a Customer**:
+   - Click the "Delete" button on a customer card to remove the customer and their associated addresses.
+
+   ![Delete Customer Screenshot](images/frontend_delete_customer.png)
+
+### Responsive Design:
+- The application is fully responsive and works seamlessly on desktops, tablets, and mobile devices.
+
+---
+
+## Backend Features
+
+The backend is a RESTful API built with **Python 3.11** and **Flask**, providing robust functionality for managing customers and their addresses.
+
+### Key Features:
+- **Customer Management**: Create, read, update, and delete customer records.
+- **Address Management**: Associate multiple addresses with each customer.
+- **Image Support**: Upload and retrieve customer profile images.
+- **Data Validation**: Prevent duplicate emails and enforce required fields.
+- **RESTful Design**: Following REST principles with appropriate HTTP verbs and status codes.
+- **Comprehensive Test Suite**: Automated tests for all API endpoints.
+
+---
 
 ## Tech Stack
 
-- **Python 3.11**: Core programming language
-- **Flask**: Lightweight web framework for API development
-- **MySQL 8**: Relational database for data storage
-- **Docker**: Containerization for consistent development and deployment
-- **Docker Compose**: Multi-container Docker applications
-- **Pytest**: Testing framework for automated tests
-- **Git**: Version control system
+### Frontend
+- **HTML5**: Markup language for the frontend.
+- **CSS3**: Styling with custom animations and responsive design.
+- **Bootstrap 5**: Framework for responsive and modern UI components.
+- **JavaScript**: Dynamic interactions and API integration.
+
+### Backend
+- **Python 3.11**: Core programming language.
+- **Flask**: Lightweight web framework for API development.
+- **MySQL 8**: Relational database for data storage.
+- **Docker**: Containerization for consistent development and deployment.
+- **Docker Compose**: Multi-container Docker applications.
+- **Pytest**: Testing framework for automated tests.
+
+---
 
 ## Setup and Installation
 
@@ -33,24 +87,30 @@ A comprehensive RESTful API service for customer and address management, featuri
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/agungferdi/Customers-API-Technical-Test-.git
-   cd Customers-API-Technical-Test-
+   git clone https://github.com/agungferdi/python-full-stack-crud-customers.git
+   cd python-full-stack-crud-customers
    ```
 
-2. Start the Docker containers and run tests (all in one command):
+2. Start the Docker containers:
    ```bash
-   docker-compose up -d && \
-   echo "Waiting for database to initialize..." && \
-   echo "Copying files to container..." && \
-   docker cp routes/customer_routes.py customer_api-web-1:/app/routes/ && \
-   docker cp routes/address_routes.py customer_api-web-1:/app/routes/ && \
-   docker cp tests/test_customers.py customer_api-web-1:/app/tests/ && \
-   docker cp tests/test_addresses.py customer_api-web-1:/app/tests/ 2>/dev/null || echo "No test_addresses.py found" && \
-   echo "Running tests..." && \
-   docker exec -it customer_api-web-1 bash -c "cd /app && python -m pytest -v"
+   docker-compose up -d
    ```
-   It Should be like this:
-   ![Test Results Screenshot](images/test_results.png)
+
+3. Access the application:
+   - **Frontend**: Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+4. Run the test suite:
+   ```bash
+   docker exec -it customer_api-web-1 pytest -v
+   ```
+
+5. Run integration tests:
+   ```bash
+   docker exec -it customer_api-web-1 pytest tests/integration_tests.py -v
+   ```
+
+---
+
 ## Project Structure
 
 ```
@@ -64,64 +124,51 @@ customer_api/
 ├── routes/                 # API route handlers
 │   ├── customer_routes.py
 │   └── address_routes.py
+├── static/                 # Frontend static files
+│   ├── css/
+│   │   └── style.css       # Custom styles
+│   └── js/
+│       └── main.js         # Frontend logic
+├── templates/              # HTML templates
+│   └── index.html          # Main frontend page
 ├── tests/                  # Testing
 │   ├── test_customers.py
-│   └── test_addresses.py
+│   ├── test_addresses.py
+│   └── integration_tests.py # Integration tests
 ├── utils/                  # Utility functions
 │   └── database.py
 └── migrations/             # Database schema migrations
     └── init_db.sql
 ```
 
-## API Endpoints
+---
 
-### Customer Endpoints
+## Integration Testing
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/customers` | List all customers |
-| POST | `/api/customers` | Create a new customer |
-| GET | `/api/customers/{id}` | Get customer details by ID and its adrress |
-| PUT | `/api/customers/{id}` | Update customer details |
-| DELETE | `/api/customers/{id}` | Delete a customer |
+Integration tests ensure that the frontend and backend work together seamlessly. Run the integration tests using:
 
-### Address Endpoints
+```bash
+docker exec -it customer_api-web-1 pytest tests/integration_tests.py -v
+```
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/customers/{customer_id}/addresses` | List customer's addresses |
-| POST | `/api/addresses` | Add a new address |
-| GET | `/api/addresses/{id}` | Get address details by ID |
-| PUT | `/api/addresses/{id}` | Update address details |
-| DELETE | `/api/addresses/{id}` | Delete an address |
+These tests verify:
+- Creating a customer
+- Fetching all customers
+- Viewing customer details (with associated addresses)
+- Adding, editing, and deleting addresses
 
-## Working with Test Data
+---
 
-After running the test suite, several customer and address records will be created in the database. You can interact with this data via the API endpoints listed above.
+## License
 
-## API Usage Examples with Postman
+This project is created by **Agung** for a technical test - Backend Engineer. All rights reserved.
 
-### 1. Create a New Customer
-![Test Results Screenshot](images/1.png)
+---
 
-### 2. List All Customers
-![Test Results Screenshot](images/2.png)
+### Key Updates:
+1. **Frontend First**: The frontend features are now highlighted at the beginning of the README.
+2. **Screenshots**: Added placeholders for screenshots of the frontend features.
+3. **Responsive Design**: Emphasized the responsive nature of the frontend.
+4. **Integration Testing**: Retained the integration testing section for verifying frontend-backend interactions.
 
-### 3. Detail of customers (with associated address)
-![Test Results Screenshot](images/3.png)
-
-### 4. Update a Customer
-![Test Results Screenshot](images/4.png)
-### 5. Update address
-![Test Results Screenshot](images/5.png)
-### 6. Add an Address to a Customer
-![Test Results Screenshot](images/6.png)
-### 7. Delete an Address
-![Test Results Screenshot](images/7.png)
-### 8. Delete a Customerf
-![Test Results Screenshot](images/8.png)
-
- 
-
-created by Agung For Technical Test - Backend Engineer
-
+Make sure to replace the placeholder image paths (e.g., `images/frontend_add_customer.png`) with actual screenshots of your application. Let me know if you need further adjustments!
