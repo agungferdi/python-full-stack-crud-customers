@@ -1,7 +1,3 @@
-Here’s an updated README.md that places the **Frontend** section at the beginning, highlights its features, and includes placeholders for screenshots:
-
----
-
 # Customer Management System - Full Stack Application
 
 A comprehensive full-stack application for managing customers and their associated addresses. This project includes a responsive, modern frontend interface and a RESTful API backend.
