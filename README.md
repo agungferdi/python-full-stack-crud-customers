@@ -1,3 +1,7 @@
+Here’s an updated README.md that places the **Frontend** section at the beginning, highlights its features, and includes placeholders for screenshots:
+
+---
+
 # Customer Management System - Full Stack Application
 
 A comprehensive full-stack application for managing customers and their associated addresses. This project includes a responsive, modern frontend interface and a RESTful API backend.
@@ -6,39 +10,54 @@ A comprehensive full-stack application for managing customers and their associat
 
 ## Frontend Features
 
-The frontend is built with **HTML5**, **CSS3**, **Bootstrap 5**, and **JavaScript** to provide a modern, responsive, and user-friendly interface.
+The frontend is built with **HTML5**, **CSS3**, **Bootstrap 5**, and **JavaScript** to provide a modern4,000,000, responsive, and user-friendly interface.
 
 ### Key Features:
-1. **Add a New Customer**:
+1. **Home Page**:
+   - The home page displays a list of all customers in a card layout.
+   - Click the **"Add Customer"** button to open the form for adding a new customer.
+   - Fill in the required details (e.g., name, email, phone number) and click **"Save Customer"**.
+   - The newly added customer will appear in the customer list dynamically without refreshing the page.
+
+   ![Home Page Screenshot](images/index.png)
+
+2. **Add a New Customer**:
    - Click the "Add Customer" button to open the form.
    - Fill in the details and click "Save Customer."
    - The new customer will appear in the customer list.
 
    ![Add Customer Screenshot](images/frontend_add_customer.png)
 
-2. **View Customer Details**:
+3. **View Customer Details**:
    - Click the "View" button on a customer card to see their details and associated addresses.
    - The modal displays customer information and a list of addresses.
 
-   ![View Customer Details Screenshot](images/frontend_customer_details.png)
+   ![View Customer Details Screenshot](images/details.png)
 
-3. **Edit a Customer**:
+4. **Edit a Customer**:
    - Click the "Edit" button on a customer card to update their details.
    - The form will pre-fill with the customer's current information.
 
-   ![Edit Customer Screenshot](images/frontend_edit_customer.png)
+   ![Edit Customer Screenshot](images/editcustomer.png)
 
-4. **Manage Addresses**:
+5. **Manage Addresses**:
    - Add, edit, or delete addresses directly from the customer details modal.
    - Click "Add Address" to open the address form.
 
-   ![Manage Addresses Screenshot](images/frontend_manage_addresses.png)
+   ![Manage Addresses Screenshot](images/addaddress.png)
+   ![Manage Addresses Screenshot](images/editaddress.png)
 
-5. **Delete a Customer**:
+6. **Delete a Customer**:
    - Click the "Delete" button on a customer card to remove the customer and their associated addresses.
 
-   ![Delete Customer Screenshot](images/frontend_delete_customer.png)
+   ![Delete Customer Screenshot](images/delete1.png)
+   ![Delete Customer Screenshot](images/delete2.png)
 
+7. **Delete a specific address of a customer**:
+   - Click the "Delete" button on a customer card to remove the customer and their associated addresses.
+
+   ![Delete Customer Screenshot](images/deletec.png)
+   ![Delete Customer Screenshot](images/deletec2.png)
 ### Responsive Design:
 - The application is fully responsive and works seamlessly on desktops, tablets, and mobile devices.
 
